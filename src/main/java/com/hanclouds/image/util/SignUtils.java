@@ -1,6 +1,7 @@
 package com.hanclouds.image.util;
 
 import com.hanclouds.image.exception.HanCloudsClientException;
+import org.springframework.util.Base64Utils;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.Mac;
@@ -85,7 +86,7 @@ public class SignUtils {
         signStrBuilder.replace(0, 1, "");
 
         if (bodyContent != null && bodyContent.length > 0) {
-            signStrBuilder.append(new String(bodyContent, Charset.forName(CHARSET_UTF8)));
+            signStrBuilder.append(Base64Utils.encodeToString(bodyContent));
         }
 
         return SignUtils.signWithHmacsh1(secret, signStrBuilder.toString());
